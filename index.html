@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GameJam X Esports 2026 | Official Registration Portal</title>
+
+<!--
+  =====================================================================
+  GAMEJAM X ESPORTS 2026 — OFFICIAL REGISTRATION PORTAL
+  Single-file HTML/CSS/JS build. No external libraries/frameworks.
+
+  HOW TO EDIT LINKS:
+  Scroll to the "EVENT LINKS — EDIT HERE" block inside <script> below.
+  Replace each placeholder string with your real Google Form / registration URL.
+  That is the ONLY place you need to touch to update links.
+  =====================================================================
+-->
+
+<style>
+  /* ============================= */
+  /* 1. ROOT VARIABLES (LOGO PALETTE) */
+  /* ============================= */
+  :root{
+    --bg-black:      #0a0908;      /* near-black background, matches logo backdrop */
+    --bg-panel:      #131110;      /* card base */
+    --bg-panel-2:    #1a1715;      /* card hover base */
+    --orange:        #ff6a00;      /* primary accent, straight from the X-mark */
+    --orange-light:  #ff9142;      /* lighter glow variant */
+    --orange-dim:    #7a3400;      /* deep shadow orange */
+    --grey-glitch:   #8c8c8c;      /* pixel-glitch grey from logo */
+    --grey-dim:      #4d4b49;
+    --white:         #f5f4f2;
+    --off-white:     #cfcdca;
+    --radius:        14px;
+    --font-display:  'Arial Black', 'Segoe UI Black', Impact, sans-serif;
+    --font-body:     'Segoe UI', Roboto, Arial, sans-serif;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background: var(--bg-black);
+    color: var(--white);
+    font-family: var(--font-body);
+    min-height:100vh;
+    overflow-x:hidden;
+    /* subtle vignette + faint diagonal grid texture to echo the pixel-glitch look */
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(255,106,0,0.08), transparent 55%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 24px);
+  }
+
+  /* ============================= */
+  /* 2. BACKGROUND FX LAYER */
+  /* ============================= */
+  .bg-glow{
+    position:fixed;
+    top:-20%; left:50%;
+    transform:translateX(-50%);
+    width:140vw; height:70vh;
+    background: radial-gradient(ellipse at center, rgba(255,106,0,0.18) 0%, rgba(255,106,0,0) 70%);
+    filter: blur(40px);
+    pointer-events:none;
+    z-index:0;
+    animation: pulseGlow 6s ease-in-out infinite;
+  }
+  @keyframes pulseGlow{
+    0%,100%{ opacity:0.7; }
+    50%{ opacity:1; }
+  }
+
+  /* ============================= */
+  /* 3. HEADER */
+  /* ============================= */
+  header{
+    position:relative;
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding: 56px 20px 40px;
+  }
+
+  .logo-wrap{
+    width:150px;
+    height:150px;
+    margin-bottom:18px;
+    animation: fadeDown 0.9s ease both;
+    filter: drop-shadow(0 0 22px rgba(255,106,0,0.45));
+  }
+  .logo-wrap img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    border-radius:12px;
+  }
+
+  h1.brand-title{
+    font-family: var(--font-display);
+    font-weight:900;
+    letter-spacing:2px;
+    font-size: clamp(1.8rem, 6vw, 3.2rem);
+    line-height:1.05;
+    color:var(--white);
+    text-transform:uppercase;
+    animation: fadeDown 0.9s ease 0.1s both;
+    text-shadow: 0 0 18px rgba(255,106,0,0.25);
+  }
+  h1.brand-title span{
+    color: var(--orange);
+    text-shadow: 0 0 22px rgba(255,106,0,0.8), 0 0 46px rgba(255,106,0,0.4);
+  }
+
+  .subtitle{
+    margin-top:10px;
+    font-size: clamp(0.85rem, 2.4vw, 1.05rem);
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color: var(--grey-glitch);
+    font-weight:600;
+    animation: fadeDown 0.9s ease 0.2s both;
+  }
+
+  .instruction{
+    margin-top:26px;
+    font-size: clamp(1rem, 2.6vw, 1.25rem);
+    color: var(--off-white);
+    font-weight:500;
+    animation: fadeDown 0.9s ease 0.3s both;
+    position:relative;
+    padding-bottom:14px;
+  }
+  .instruction::after{
+    content:"";
+    position:absolute;
+    bottom:0; left:50%;
+    transform:translateX(-50%);
+    width:64px; height:3px;
+    background: linear-gradient(90deg, transparent, var(--orange), transparent);
+    border-radius:3px;
+  }
+
+  .event-meta {
+    margin-top: 18px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    color: var(--off-white);
+    font-weight: 500;
+    animation: fadeDown 0.9s ease 0.35s both;
+  }
+  .event-meta span {
+    background: rgba(255, 106, 0, 0.08);
+    border: 1px solid rgba(255, 106, 0, 0.25);
+    padding: 6px 14px;
+    border-radius: 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  @keyframes fadeDown{
+    from{ opacity:0; transform:translateY(-16px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  /* ============================= */
+  /* 4. EVENT GRID + CARDS */
+  /* ============================= */
+  main{
+    position:relative;
+    z-index:2;
+    max-width:1100px;
+    margin:0 auto;
+    padding: 30px 20px 60px;
+  }
+
+  .event-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap:22px;
+  }
+
+  .event-card{
+    position:relative;
+    background: linear-gradient(155deg, var(--bg-panel) 0%, #0f0d0c 100%);
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 30px 22px;
+    text-decoration:none;
+    color: var(--white);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+    text-align:center;
+    cursor:pointer;
+    overflow:hidden;
+    opacity:0;
+    transform: translateY(24px);
+    animation: cardIn 0.6s ease forwards;
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+  }
+
+  /* staggered entrance */
+  .event-card:nth-child(1){ animation-delay: 0.05s; }
+  .event-card:nth-child(2){ animation-delay: 0.12s; }
+  .event-card:nth-child(3){ animation-delay: 0.19s; }
+  .event-card:nth-child(4){ animation-delay: 0.26s; }
+  .event-card:nth-child(5){ animation-delay: 0.33s; }
+  .event-card:nth-child(6){ animation-delay: 0.40s; }
+  .event-card:nth-child(7){ animation-delay: 0.47s; }
+
+  @keyframes cardIn{
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  /* corner accent = pixel glitch nod */
+  .event-card::before{
+    content:"";
+    position:absolute;
+    top:0; right:0;
+    width:0; height:0;
+    border-style:solid;
+    border-width: 0 46px 46px 0;
+    border-color: transparent var(--grey-dim) transparent transparent;
+    opacity:0.5;
+    transition: border-color 0.35s ease;
+  }
+
+  .event-card:hover, .event-card:focus-visible{
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(255,106,0,0.55);
+    box-shadow: 0 14px 34px rgba(255,106,0,0.18), 0 0 0 1px rgba(255,106,0,0.12) inset;
+    background: linear-gradient(155deg, var(--bg-panel-2) 0%, #171310 100%);
+  }
+  .event-card:hover::before{
+    border-color: transparent var(--orange) transparent transparent;
+    opacity:0.9;
+  }
+
+  .event-icon{
+    font-size: 2.6rem;
+    line-height:1;
+    filter: drop-shadow(0 0 10px rgba(255,106,0,0.35));
+    transition: transform 0.35s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .event-icon img{
+    width: 2.6rem;
+    height: 2.6rem;
+    object-fit: contain;
+  }
+  .event-card:hover .event-icon{
+    transform: scale(1.15) rotate(-4deg);
+  }
+
+  .event-name{
+    font-family: var(--font-display);
+    font-weight:900;
+    letter-spacing:1px;
+    font-size:1.05rem;
+    text-transform:uppercase;
+    color:var(--white);
+  }
+
+  .event-actions {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-top: 14px;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .event-card:hover .event-actions {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .event-actions .btn {
+    flex: 1;
+    padding: 10px 0;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .btn-rule {
+    background: transparent;
+    border: 1px solid rgba(255,106,0,0.5);
+    color: var(--orange-light);
+  }
+  .btn-rule:hover {
+    background: rgba(255,106,0,0.1);
+  }
+  .btn-register {
+    background: var(--orange);
+    color: #fff;
+    border: 1px solid var(--orange);
+  }
+  .btn-register:hover {
+    background: #e65c00;
+  }
+
+  .event-desc{
+    font-size: 0.85rem;
+    color: var(--off-white);
+    line-height: 1.4;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .event-details{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    text-align: left;
+  }
+
+  .detail-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+  }
+
+  .detail-label{
+    color: var(--grey-glitch);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.5px;
+  }
+
+  .detail-value{
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .detail-value.prize-value{
+    color: var(--orange);
+    font-weight: 700;
+  }
+
+  /* ripple element for click feedback */
+  .ripple{
+    position:absolute;
+    border-radius:50%;
+    background: rgba(255,106,0,0.35);
+    transform: scale(0);
+    animation: rippleAnim 0.6s ease-out;
+    pointer-events:none;
+  }
+  @keyframes rippleAnim{
+    to{ transform:scale(4); opacity:0; }
+  }
+
+  /* ============================= */
+  /* 5. SPONSORS AREA */
+  /* ============================= */
+  .sponsors-section{
+    position:relative;
+    z-index:2;
+    max-width:1100px;
+    margin: 40px auto 20px;
+    padding: 0 20px;
+    text-align:center;
+  }
+  .section-title{
+    font-family: var(--font-display);
+    font-weight:900;
+    font-size: 1.5rem;
+    text-transform:uppercase;
+    color: var(--grey-glitch);
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    position: relative;
+    display: inline-block;
+  }
+  .section-title::after{
+    content:"";
+    position:absolute;
+    bottom:-10px; left:50%;
+    transform:translateX(-50%);
+    width:60px; height:3px;
+    background: var(--orange);
+    border-radius:3px;
+  }
+  .sponsors-grid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    background: rgba(19, 17, 16, 0.6);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: var(--radius);
+    padding: 40px;
+    backdrop-filter: blur(10px);
+  }
+  .sponsor-card{
+    flex: 1 1 150px;
+    max-width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: grayscale(100%) opacity(0.6);
+  }
+  .sponsor-card:hover{
+    transform: scale(1.05);
+    filter: grayscale(0%) opacity(1);
+  }
+  .sponsor-card img{
+    max-width: 100%;
+    max-height: 80px;
+    object-fit: contain;
+  }
+
+  /* ============================= */
+  /* 6. FOOTER */
+  /* ============================= */
+  footer{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    padding: 28px 20px 40px;
+    color: var(--grey-glitch);
+    font-size:0.85rem;
+    letter-spacing:1px;
+  }
+  footer .divider{
+    width:80px;
+    height:2px;
+    margin:0 auto 16px;
+    background: linear-gradient(90deg, transparent, var(--orange), transparent);
+    border-radius:2px;
+  }
+  footer strong{
+    color: var(--orange);
+    font-weight:700;
+  }
+
+  /* ============================= */
+  /* 7. RESPONSIVE TWEAKS */
+  /* ============================= */
+  @media (max-width:480px){
+    .logo-wrap{ width:120px; height:120px; }
+    .event-card{ padding:24px 16px; }
+    .event-icon{ font-size:2.2rem; }
+  }
+
+  @media (min-width:900px){
+    .event-grid{ grid-template-columns: repeat(4, 1fr); }
+  }
+
+  /* respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- Ambient glow layer -->
+  <div class="bg-glow"></div>
+
+  <!-- ============================= -->
+  <!-- HEADER -->
+  <!-- ============================= -->
+  <header>
+    <div class="logo-wrap">
+      <img src="gamejam-logo.png" alt="GameJam X Esports Logo">
+    </div>
+    <h1 class="brand-title">GAMEJAM <span>X</span> ESPORTS 2026</h1>
+    <p class="subtitle">Official Registration Portal</p>
+    <p class="instruction">Select your event to register</p>
+    <div class="event-meta">
+      <span>📅 28–29 August 2026</span>
+      <span>📍 SRMIST Ramapuram, Chennai</span>
+    </div>
+  </header>
+
+  <!-- ============================= -->
+  <!-- EVENT CARD GRID -->
+  <!-- ============================= -->
+  <main>
+    <div class="event-grid" id="eventGrid">
+      <!-- Cards are rendered by JavaScript from the EVENTS array below,
+           so links only ever need to be edited in ONE place. -->
+    </div>
+  </main>
+
+  <!-- ============================= -->
+  <!-- SPONSORS AREA -->
+  <!-- ============================= -->
+  <section class="sponsors-section">
+    <h2 class="section-title">Our Sponsors</h2>
+    <div class="sponsors-grid">
+      <div class="sponsor-card"><img src="./sponsor-ffmax.png" alt="FF Max Community Chennai"></div>
+      <div class="sponsor-card"><img src="./sponsor-vasanth.png" alt="Vasanth & Co"></div>
+      <div class="sponsor-card"><img src="./sponsor-arena.png" alt="Arena Animation"></div>
+      <div class="sponsor-card"><img src="./sponsor-redbull.png" alt="Red Bull"></div>
+    </div>
+  </section>
+
+  <!-- ============================= -->
+  <!-- FOOTER -->
+  <!-- ============================= -->
+  <footer>
+    <div class="divider"></div>
+  </footer>
+
+  <script>
+    /* =====================================================================
+       EVENT LINKS — EDIT HERE
+       Replace the placeholder strings on the right with your real URLs.
+       Nothing else in this file needs to change when links are updated.
+       ===================================================================== */
+    const EVENTS = [
+      { 
+        icon: "./gamejam-logo.png", 
+        name: "GameJam", 
+        desc: "Build, create and showcase your own game!", 
+        registration: "₹1,200/team OR ₹300/person", 
+        prizePool: "₹7,500 + IGDC Tickets", 
+        perks: "Portfolio Reviews (Top 10)",
+        link: "https://forms.gle/W4siNd9Po2p2LyDK9",
+        ruleLink: "rules.html"
+      },
+      { 
+        icon: "./valorant-logo.png", 
+        name: "Valorant", 
+        desc: "Tactical 5v5 action", 
+        registration: "₹750/team", 
+        prizePool: "₹7,500 + Gamingcon Tickets", 
+        link: "https://forms.gle/1E8hkJJ9wEi2k1ja8",
+        ruleLink: "rules.html#valorant"
+      },
+      { 
+        icon: "https://drive.google.com/uc?export=view&id=1Iy8ple-lR3QNDDRlIUjC2nY5VYc1CV8K", 
+        name: "BGMI", 
+        desc: "Squad up and fight for the Chicken Dinner", 
+        registration: "₹600/team", 
+        prizePool: "₹5,000 + Merchandise", 
+        link: "https://forms.gle/ELWABRjfRSasvrnx6",
+        ruleLink: "rules.html#bgmi"
+      },
+      { 
+        icon: "./freefire-logo.png", 
+        name: "Free Fire", 
+        desc: "Fast-paced battle royale action", 
+        registration: "₹400/team", 
+        prizePool: "₹5,000 + 10K Diamonds + Merch", 
+        link: "https://forms.gle/PmebGYxsPD4CNVmy6",
+        ruleLink: "rules.html#free-fire"
+      },
+      { 
+        icon: "./tekken-logo.png", 
+        name: "Tekken", 
+        desc: "1v1 fighting showdown", 
+        registration: "₹200/person", 
+        link: "https://forms.gle/gQ1YsWpN5FLKCHpi7",
+        ruleLink: "rules.html#tekken-8"
+      },
+      { 
+        icon: "./fc26-logo.png", 
+        name: "EA FC 26 (FIFA)", 
+        desc: "Prove your football skills", 
+        registration: "₹250/person", 
+        prizePool: "₹5,000 + Merchandise", 
+        link: "https://forms.gle/KVeQgSyH4y4nhDcR7",
+        ruleLink: "rules.html#ea-sports-fc-26"
+      }
+    ];
+
+    /* Build the grid of event cards dynamically */
+    const grid = document.getElementById('eventGrid');
+
+    EVENTS.forEach(function(event){
+      const card = document.createElement('div');
+      card.className = 'event-card';
+
+      let detailsHtml = '';
+      if (event.registration) {
+        detailsHtml += '<div class="detail-item">' +
+          '<span class="detail-label">Reg Fee</span>' +
+          '<span class="detail-value">' + event.registration + '</span>' +
+          '</div>';
+      }
+      if (event.prizePool) {
+        detailsHtml += '<div class="detail-item">' +
+          '<span class="detail-label">Prize Pool</span>' +
+          '<span class="detail-value prize-value">' + event.prizePool + '</span>' +
+          '</div>';
+      }
+      if (event.perks) {
+        detailsHtml += '<div class="detail-item">' +
+          '<span class="detail-label">Perks</span>' +
+          '<span class="detail-value">' + event.perks + '</span>' +
+          '</div>';
+      }
+
+      let iconHtml = event.icon;
+      if (event.icon.includes('.') || event.icon.includes('/')) {
+        iconHtml = '<img src="' + event.icon + '" alt="' + event.name + ' Logo" />';
+      }
+
+      card.innerHTML =
+        '<div class="event-icon">' + iconHtml + '</div>' +
+        '<div class="event-name">' + event.name + '</div>' +
+        '<div class="event-desc">' + (event.desc || '') + '</div>' +
+        (detailsHtml ? '<div class="event-details">' + detailsHtml + '</div>' : '') +
+        '<div class="event-actions">' +
+          '<a href="' + (event.ruleLink || 'rules.html') + '" class="btn btn-rule" target="_blank" rel="noopener noreferrer">Rule</a>' +
+          '<a href="' + event.link + '" class="btn btn-register" target="_blank" rel="noopener noreferrer">Registration</a>' +
+        '</div>';
+
+      // Click ripple effect for tactile feedback
+      card.addEventListener('click', function(e){
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        const rect = card.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top  = (e.clientY - rect.top  - size / 2) + 'px';
+        card.appendChild(ripple);
+        setTimeout(function(){ ripple.remove(); }, 650);
+      });
+
+      grid.appendChild(card);
+    });
+  </script>
+
+</body>
+</html>
