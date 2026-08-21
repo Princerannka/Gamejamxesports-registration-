@@ -183,12 +183,15 @@
   }
 
   .event-grid{
-    display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap:22px;
   }
 
   .event-card{
+    flex: 1 1 280px;
+    max-width: 320px;
     position:relative;
     background: linear-gradient(155deg, var(--bg-panel) 0%, #0f0d0c 100%);
     border:1px solid rgba(255,255,255,0.06);
@@ -339,8 +342,9 @@
   .detail-item{
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     font-size: 0.82rem;
+    gap: 10px;
   }
 
   .detail-label{
@@ -349,6 +353,8 @@
     text-transform: uppercase;
     font-size: 0.72rem;
     letter-spacing: 0.5px;
+    flex-shrink: 0;
+    padding-top: 4px;
   }
 
   .detail-value{
@@ -357,8 +363,21 @@
   }
 
   .detail-value.prize-value{
-    color: var(--orange);
+    color: #fff;
     font-weight: 700;
+    background: rgba(255,106,0,0.15);
+    border: 1px solid rgba(255,106,0,0.4);
+    padding: 4px 10px;
+    border-radius: 6px;
+    box-shadow: 0 0 15px rgba(255,106,0,0.2) inset, 0 0 10px rgba(255,106,0,0.2);
+    font-size: 0.8rem;
+    display: inline-block;
+    text-align: right;
+  }
+  .detail-value.prize-value::before {
+    content: "🏆 ";
+    font-size: 0.95rem;
+    vertical-align: baseline;
   }
 
   /* ripple element for click feedback */
@@ -407,33 +426,63 @@
   }
   .sponsors-grid{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     gap: 40px;
-    flex-wrap: wrap;
     background: rgba(19, 17, 16, 0.6);
     border: 1px solid rgba(255,255,255,0.04);
     border-radius: var(--radius);
     padding: 40px;
     backdrop-filter: blur(10px);
   }
-  .sponsor-card{
-    flex: 1 1 150px;
-    max-width: 200px;
+  .sponsors-tier {
     display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .sponsor-card{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     justify-content: center;
     align-items: center;
     transition: transform 0.3s ease, filter 0.3s ease;
     filter: grayscale(100%) opacity(0.6);
   }
+  .sponsor-card.title-sponsor {
+    flex: 1 1 300px;
+    max-width: 400px;
+  }
+  .sponsor-card.title-sponsor .sponsor-label {
+    font-size: 1.2rem;
+  }
+  .sponsor-card.title-sponsor img {
+    height: 140px;
+    width: 100%;
+    object-fit: contain;
+  }
+  .sponsor-card.regular-sponsor {
+    flex: 1 1 150px;
+    max-width: 200px;
+  }
+  .sponsor-card.regular-sponsor img {
+    height: 80px;
+    width: 100%;
+    object-fit: contain;
+  }
+  .sponsor-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--orange);
+    text-align: center;
+  }
   .sponsor-card:hover{
     transform: scale(1.05);
     filter: grayscale(0%) opacity(1);
-  }
-  .sponsor-card img{
-    max-width: 100%;
-    max-height: 80px;
-    object-fit: contain;
   }
 
   /* ============================= */
@@ -490,7 +539,7 @@
   <!-- ============================= -->
   <header>
     <div class="logo-wrap">
-      <img src="https://drive.google.com/thumbnail?id=1XgeHLOvXNnjvGHFd613soxB5lfdJ6Az-&sz=w500" alt="GameJam X Esports Logo">
+      <img src="https://lh3.googleusercontent.com/d/1XgeHLOvXNnjvGHFd613soxB5lfdJ6Az-" alt="GameJam X Esports Logo">
     </div>
     <h1 class="brand-title">GAMEJAM <span>X</span> ESPORTS 2026</h1>
     <p class="subtitle">Official Registration Portal</p>
@@ -517,10 +566,30 @@
   <section class="sponsors-section">
     <h2 class="section-title">Our Sponsors</h2>
     <div class="sponsors-grid">
-      <div class="sponsor-card"><img src="https://drive.google.com/thumbnail?id=1wnnCjgmuHa8d2vyHigiHBDwC2a3jtY6E&sz=w500" alt="FF Max Community Chennai"></div>
-      <div class="sponsor-card"><img src="https://drive.google.com/thumbnail?id=1_F7s3aecq8GX8f1K_MuBJR1_DphHYrT7&sz=w500" alt="Vasanth & Co"></div>
-      <div class="sponsor-card"><img src="https://drive.google.com/thumbnail?id=1K4Vq4Osq1K9OJYfBDIALV1EmAU-rMa-i&sz=w500" alt="Arena Animation"></div>
-
+      <div class="sponsors-tier">
+        <div class="sponsor-card title-sponsor">
+          <div class="sponsor-label">Title Sponsor</div>
+          <img src="https://lh3.googleusercontent.com/d/159iDOe3SK6bIU8xttsa9BQ32CyGSDkw8" alt="Vasanth & Co">
+        </div>
+      </div>
+      <div class="sponsors-tier">
+        <div class="sponsor-card regular-sponsor">
+          <div class="sponsor-label">Gold Sponsor</div>
+          <img src="https://lh3.googleusercontent.com/d/1K4Vq4Osq1K9OJYfBDIALV1EmAU-rMa-i" alt="Arena Animation">
+        </div>
+        <div class="sponsor-card regular-sponsor">
+          <div class="sponsor-label">Event Partner</div>
+          <img src="https://lh3.googleusercontent.com/d/1Xcj6BucTiN5h0RiVnLJfCORxGrIzfgyz" alt="Nomad Province">
+        </div>
+        <div class="sponsor-card regular-sponsor">
+          <div class="sponsor-label">GameJam Partner</div>
+          <img src="https://lh3.googleusercontent.com/d/1231uEP3PpiiVGDbIkNWRwkgIz4JNPUwQ" alt="GDAI">
+        </div>
+        <div class="sponsor-card regular-sponsor">
+          <div class="sponsor-label">Community Partner</div>
+          <img src="https://lh3.googleusercontent.com/d/1wnnCjgmuHa8d2vyHigiHBDwC2a3jtY6E" alt="FF Max Community Chennai">
+        </div>
+      </div>
     </div>
   </section>
 
@@ -539,58 +608,59 @@
        ===================================================================== */
     const EVENTS = [
       { 
-        icon: "https://drive.google.com/thumbnail?id=1XgeHLOvXNnjvGHFd613soxB5lfdJ6Az-&sz=w500", 
+        icon: "https://lh3.googleusercontent.com/d/1XgeHLOvXNnjvGHFd613soxB5lfdJ6Az-", 
         name: "GameJam", 
         desc: "Build, create and showcase your own game!", 
         registration: "₹1,200/team OR ₹300/person", 
         prizePool: "₹7,500 + IGDC Tickets", 
         perks: "Portfolio Reviews (Top 10)",
         link: "https://forms.gle/W4siNd9Po2p2LyDK9",
-        ruleLink: "rules.html"
+        ruleLink: "gamejam-rules.html"
       },
       { 
-        icon: "https://drive.google.com/thumbnail?id=1GiHb6WHNsigidL2VUq7HNYIunRFpVM_P&sz=w500", 
+        icon: "https://lh3.googleusercontent.com/d/1GiHb6WHNsigidL2VUq7HNYIunRFpVM_P", 
         name: "Valorant", 
         desc: "Tactical 5v5 action", 
         registration: "₹750/team", 
         prizePool: "₹7,500 + Gamingcon Tickets", 
         link: "https://forms.gle/1E8hkJJ9wEi2k1ja8",
-        ruleLink: "rules.html#valorant"
+        ruleLink: "valorant-rules.html#valorant"
       },
       { 
-        icon: "https://drive.google.com/thumbnail?id=1Iy8ple-lR3QNDDRlIUjC2nY5VYc1CV8K&sz=w500", 
+        icon: "https://lh3.googleusercontent.com/d/1Iy8ple-lR3QNDDRlIUjC2nY5VYc1CV8K", 
         name: "BGMI", 
         desc: "Squad up and fight for the Chicken Dinner", 
         registration: "₹600/team", 
         prizePool: "₹5,000 + Merchandise", 
         link: "https://forms.gle/ELWABRjfRSasvrnx6",
-        ruleLink: "rules.html#bgmi"
+        ruleLink: "bgmi-rules.html#bgmi"
       },
       { 
-        icon: "https://drive.google.com/thumbnail?id=1XtT6EHGSjARPT0GViTZTW2BI2QpvJgqO&sz=w500", 
+        icon: "https://lh3.googleusercontent.com/d/1XtT6EHGSjARPT0GViTZTW2BI2QpvJgqO", 
         name: "Free Fire", 
         desc: "Fast-paced battle royale action", 
         registration: "₹400/team", 
         prizePool: "₹5,000 + 10K Diamonds + Merch", 
         link: "https://forms.gle/PmebGYxsPD4CNVmy6",
-        ruleLink: "rules.html#free-fire"
+        ruleLink: "freefire-rules.html#free-fire"
       },
       { 
-        icon: "https://drive.google.com/thumbnail?id=1PLc-TFOFQwP3l6vv_bsg8-oLhpxRLL17&sz=w500", 
+        icon: "https://lh3.googleusercontent.com/d/1PLc-TFOFQwP3l6vv_bsg8-oLhpxRLL17", 
         name: "Tekken", 
         desc: "1v1 fighting showdown", 
         registration: "₹200/person", 
+        prizePool: "₹3,000 (1st) | ₹1,000 (2nd) | Gaming Con Ticket (3rd)",
         link: "https://forms.gle/gQ1YsWpN5FLKCHpi7",
-        ruleLink: "rules.html#tekken-8"
+        ruleLink: "tekken-rules.html#tekken-8"
       },
       { 
-        icon: "https://drive.google.com/thumbnail?id=1GweuZlAF0jS2wKMbjnbno5b-EtugDG4D&sz=w500", 
+        icon: "https://lh3.googleusercontent.com/d/1GweuZlAF0jS2wKMbjnbno5b-EtugDG4D", 
         name: "EA FC 26 (FIFA)", 
         desc: "Prove your football skills", 
         registration: "₹250/person", 
         prizePool: "₹5,000 + Merchandise", 
         link: "https://forms.gle/KVeQgSyH4y4nhDcR7",
-        ruleLink: "rules.html#ea-sports-fc-26"
+        ruleLink: "eafc-rules.html#ea-sports-fc-26"
       }
     ];
 
