@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Jam Official Rules | GameJam X Esports 2026</title>
+<style>
+  :root{
+    --bg-black:      #0a0908;
+    --bg-panel:      #131110;
+    --orange:        #ff6a00;
+    --orange-light:  #ff9142;
+    --orange-dim:    #7a3400;
+    --grey-glitch:   #8c8c8c;
+    --grey-dim:      #4d4b49;
+    --white:         #f5f4f2;
+    --off-white:     #cfcdca;
+    --radius:        14px;
+    --font-display:  'Arial Black', 'Segoe UI Black', Impact, sans-serif;
+    --font-body:     'Segoe UI', Roboto, Arial, sans-serif;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background: var(--bg-black);
+    color: var(--white);
+    font-family: var(--font-body);
+    min-height:100vh;
+    overflow-x:hidden;
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(255,106,0,0.08), transparent 55%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 24px);
+    line-height: 1.6;
+  }
+  .bg-glow{
+    position:fixed;
+    top:-20%; left:50%;
+    transform:translateX(-50%);
+    width:140vw; height:70vh;
+    background: radial-gradient(ellipse at center, rgba(255,106,0,0.18) 0%, rgba(255,106,0,0) 70%);
+    filter: blur(40px);
+    pointer-events:none;
+    z-index:0;
+    animation: pulseGlow 6s ease-in-out infinite;
+  }
+  @keyframes pulseGlow{
+    0%,100%{ opacity:0.7; }
+    50%{ opacity:1; }
+  }
+  header {
+    position:relative; z-index:2;
+    text-align:center; padding: 56px 20px 40px;
+  }
+  header h1 { font-family: var(--font-display); text-transform:uppercase; color: var(--white); margin-bottom: 20px; font-size: 2.5rem; text-shadow: 0 0 18px rgba(255,106,0,0.25); }
+  header h1 span { color: var(--orange); text-shadow: 0 0 22px rgba(255,106,0,0.8), 0 0 46px rgba(255,106,0,0.4); }
+  
+  main {
+    position:relative; z-index:2;
+    max-width: 900px; margin: 0 auto; padding: 40px;
+    background: var(--bg-panel); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  
+  h1 { font-family: var(--font-display); color: var(--orange); margin: 50px 0 20px; text-transform: uppercase; border-bottom: 2px solid rgba(255,106,0,0.3); padding-bottom: 10px; }
+  h1:first-of-type { margin-top: 10px; }
+  h2 { font-family: var(--font-display); color: var(--white); margin: 40px 0 15px; font-size: 1.5rem; }
+  h3 { color: var(--orange-light); margin: 25px 0 10px; }
+  p, ul { color: var(--off-white); margin-bottom: 15px; font-size: 1.05rem; }
+  ul { margin-left: 20px; }
+  li { margin-bottom: 8px; }
+  strong { color: var(--white); }
+  .consequence { 
+    background: rgba(255,106,0,0.1); 
+    border: 1px solid rgba(255,106,0,0.4); 
+    padding: 15px; 
+    border-radius: 8px; 
+    margin: 20px 0; 
+  }
+  .consequence strong { color: var(--orange); }
+  a.back-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 40px; color: var(--orange); text-decoration: none; font-weight: 700; 
+    border: 1px solid rgba(255,106,0,0.5); padding: 10px 20px; border-radius: 4px; transition: 0.3s;
+    text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;
+  }
+  a.back-btn:hover { background: rgba(255,106,0,0.1); border-color: var(--orange); }
+  hr { border: 0; height: 1px; background: rgba(255,255,255,0.1); margin: 40px 0; }
+  .disclaimer { font-style: italic; color: var(--grey-glitch); font-size: 0.9rem; margin-top: 40px; }
+
+  /* Smooth entry animations */
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  main {
+    animation: fadeSlideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  main > * {
+    opacity: 0;
+    animation: fadeSlideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  main > *:nth-child(1) { animation-delay: 0.1s; }
+  main > *:nth-child(2) { animation-delay: 0.15s; }
+  main > *:nth-child(3) { animation-delay: 0.2s; }
+  main > *:nth-child(4) { animation-delay: 0.25s; }
+  main > *:nth-child(5) { animation-delay: 0.3s; }
+  main > *:nth-child(6) { animation-delay: 0.35s; }
+  main > *:nth-child(7) { animation-delay: 0.4s; }
+  main > *:nth-child(8) { animation-delay: 0.45s; }
+  main > *:nth-child(9) { animation-delay: 0.5s; }
+  main > *:nth-child(n+10) { animation-delay: 0.55s; }
+
+  /* Interactive hover effects */
+  li {
+    transition: transform 0.2s ease, color 0.2s ease, text-shadow 0.2s ease;
+  }
+  li:hover {
+    transform: translateX(8px);
+    color: var(--orange-light);
+    text-shadow: 0 0 8px rgba(255,106,0,0.3);
+  }
+  tr {
+    transition: background 0.3s ease;
+  }
+  tr:hover td {
+    background: rgba(255,106,0,0.1);
+  }
+
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<header>
+  <h1>GameJam <span>X</span> Esports 2026</h1>
+  <p style="color:var(--grey-glitch); letter-spacing: 2px; font-weight: bold; text-transform: uppercase;">Game Jam Rules</p>
+</header>
+<main>
+  <a href="index.html" class="back-btn">← Back to Registration</a>
+  <h1>GAME JAM</h1>
+  <h2>OFFICIAL RULES</h2>
+  <p><em>Please read carefully before participating</em></p>
+
+  <hr>
+
+  <h2>GENERAL CONDUCT</h2>
+  <ul>
+    <li>No indecency allowed</li>
+    <li>No fighting the staff</li>
+    <li>No public displays of affection (PDA)</li>
+    <li>No littering</li>
+    <li>No making a scene or causing disturbances</li>
+    <li>No cheating or any form of sabotage allowed</li>
+    <li><strong>Judge decision is final</strong></li>
+  </ul>
+  
+  <div class="consequence">
+    <p style="margin:0;"><strong>CONSEQUENCE:</strong> Violations of general conduct rules range from a light time penalty to immediate disqualification.</p>
+  </div>
+
+  <hr>
+
+  <h2>TECHNICAL RULES</h2>
+  <ul>
+    <li>No AI is allowed in the game itself</li>
+    <li>AI is only permitted for coding assistance</li>
+    <li>Any and all assets may be created, downloaded, or pre-made and brought to the event
+      <ul>
+        <li>Taking assets from fellow participants is not allowed</li>
+      </ul>
+    </li>
+    <li>Game size is limited to 2GB</li>
+    <li>Templates from the engine used are allowed
+      <ul>
+        <li>Using pre-made games and editing them is not allowed</li>
+      </ul>
+    </li>
+    <li><strong>Any plagiarism found will result in immediate disqualification</strong></li>
+  </ul>
+
+  <hr>
+
+  <h2>GAME RULES</h2>
+  <ul>
+    <li>The submitted game must not include sexual or inappropriate content</li>
+    <li><strong>ALL games must be made during the event</strong></li>
+    <li>A 30-second gameplay clip must be submitted during the creation of the game</li>
+    <li>Don't push one aspect of the game to an extreme</li>
+  </ul>
+
+  <p class="disclaimer">By participating in this game jam, you agree to abide by all rules listed above.</p>
+</main>
+</body>
+</html>
