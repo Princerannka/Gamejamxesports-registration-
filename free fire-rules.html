@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Official Rules | GameJam X Esports 2026</title>
+<style>
+  :root{
+    --bg-black:      #0a0908;
+    --bg-panel:      #131110;
+    --orange:        #ff6a00;
+    --orange-light:  #ff9142;
+    --orange-dim:    #7a3400;
+    --grey-glitch:   #8c8c8c;
+    --grey-dim:      #4d4b49;
+    --white:         #f5f4f2;
+    --off-white:     #cfcdca;
+    --radius:        14px;
+    --font-display:  'Arial Black', 'Segoe UI Black', Impact, sans-serif;
+    --font-body:     'Segoe UI', Roboto, Arial, sans-serif;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background: var(--bg-black);
+    color: var(--white);
+    font-family: var(--font-body);
+    min-height:100vh;
+    overflow-x:hidden;
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(255,106,0,0.08), transparent 55%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 24px);
+    line-height: 1.6;
+  }
+  .bg-glow{
+    position:fixed;
+    top:-20%; left:50%;
+    transform:translateX(-50%);
+    width:140vw; height:70vh;
+    background: radial-gradient(ellipse at center, rgba(255,106,0,0.18) 0%, rgba(255,106,0,0) 70%);
+    filter: blur(40px);
+    pointer-events:none;
+    z-index:0;
+    animation: pulseGlow 6s ease-in-out infinite;
+  }
+  @keyframes pulseGlow{
+    0%,100%{ opacity:0.7; }
+    50%{ opacity:1; }
+  }
+  header {
+    position:relative; z-index:2;
+    text-align:center; padding: 56px 20px 40px;
+  }
+  header h1 { font-family: var(--font-display); text-transform:uppercase; color: var(--white); margin-bottom: 20px; font-size: 2.5rem; text-shadow: 0 0 18px rgba(255,106,0,0.25); }
+  header h1 span { color: var(--orange); text-shadow: 0 0 22px rgba(255,106,0,0.8), 0 0 46px rgba(255,106,0,0.4); }
+  
+  main {
+    position:relative; z-index:2;
+    max-width: 900px; margin: 0 auto; padding: 40px;
+    background: var(--bg-panel); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  
+  h1 { font-family: var(--font-display); color: var(--orange); margin: 50px 0 20px; text-transform: uppercase; border-bottom: 2px solid rgba(255,106,0,0.3); padding-bottom: 10px; }
+  h1:first-of-type { margin-top: 10px; }
+  h2 { font-family: var(--font-display); color: var(--white); margin: 40px 0 15px; font-size: 1.5rem; }
+  h3 { color: var(--orange-light); margin: 25px 0 10px; }
+  p, ul { color: var(--off-white); margin-bottom: 15px; font-size: 1.05rem; }
+  ul { margin-left: 20px; }
+  li { margin-bottom: 8px; }
+  strong { color: var(--white); }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: rgba(0,0,0,0.2); border-radius: 8px; overflow: hidden; }
+  th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  th { background: rgba(255,106,0,0.1); color: var(--orange); text-transform: uppercase; font-weight: bold; letter-spacing: 1px; font-size: 0.9rem; }
+  tr:last-child td { border-bottom: none; }
+  a.back-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 40px; color: var(--orange); text-decoration: none; font-weight: 700; 
+    border: 1px solid rgba(255,106,0,0.5); padding: 10px 20px; border-radius: 4px; transition: 0.3s;
+    text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;
+  }
+  a.back-btn:hover { background: rgba(255,106,0,0.1); border-color: var(--orange); }
+  hr { border: 0; height: 1px; background: rgba(255,255,255,0.1); margin: 40px 0; }
+
+  /* Smooth entry animations */
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  main {
+    animation: fadeSlideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  main > * {
+    opacity: 0;
+    animation: fadeSlideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  main > *:nth-child(1) { animation-delay: 0.1s; }
+  main > *:nth-child(2) { animation-delay: 0.15s; }
+  main > *:nth-child(3) { animation-delay: 0.2s; }
+  main > *:nth-child(4) { animation-delay: 0.25s; }
+  main > *:nth-child(5) { animation-delay: 0.3s; }
+  main > *:nth-child(6) { animation-delay: 0.35s; }
+  main > *:nth-child(7) { animation-delay: 0.4s; }
+  main > *:nth-child(8) { animation-delay: 0.45s; }
+  main > *:nth-child(9) { animation-delay: 0.5s; }
+  main > *:nth-child(n+10) { animation-delay: 0.55s; }
+
+  /* Interactive hover effects */
+  li {
+    transition: transform 0.2s ease, color 0.2s ease, text-shadow 0.2s ease;
+  }
+  li:hover {
+    transform: translateX(8px);
+    color: var(--orange-light);
+    text-shadow: 0 0 8px rgba(255,106,0,0.3);
+  }
+  tr {
+    transition: background 0.3s ease;
+  }
+  tr:hover td {
+    background: rgba(255,106,0,0.1);
+  }
+
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<header>
+  <h1>GameJam <span>X</span> Esports 2026</h1>
+  <p style="color:var(--grey-glitch); letter-spacing: 2px; font-weight: bold; text-transform: uppercase;">Official Tournament Rules</p>
+</header>
+<main>
+  <a href="index.html" class="back-btn">← Back to Registration</a>
+
+  <h1 id="free-fire">4. FREE FIRE</h1><h2>4.1 Tournament Structure</h2>
+<ul>
+<li><strong>24 squads</strong></li>
+<li><strong>4 players per squad</strong></li>
+<li>Battle Royale</li>
+<li>Single-day tournament</li>
+<li>Entry fee: <strong>₹600 per squad</strong></li>
+</ul>
+<p>Progression:</p>
+<p><strong>24 Squads → Qualification Match 1 → Qualification Match 2 → Top 12 → Grand Final</strong></p>
+<p>The Top 12 are determined by points accumulated in the qualification stage.</p>
+<h2>4.2 Placement Points</h2>
+<table>
+<thead>
+<tr>
+<th>Placement</th>
+<th align="right">Points</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1st</td>
+<td align="right">12</td>
+</tr>
+<tr>
+<td>2nd</td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td>3rd</td>
+<td align="right">9</td>
+</tr>
+<tr>
+<td>4th</td>
+<td align="right">8</td>
+</tr>
+<tr>
+<td>5th</td>
+<td align="right">7</td>
+</tr>
+<tr>
+<td>6th</td>
+<td align="right">6</td>
+</tr>
+<tr>
+<td>7th</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td>8th</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td>9th</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td>10th</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>11th</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>12th</td>
+<td align="right">0</td>
+</tr>
+</tbody></table>
+<h2>4.3 Kill Points</h2>
+<ul>
+<li>Every kill = <strong>1 point</strong></li>
+<li>Total Score = Placement Points + Kill Points</li>
+</ul>
+<h2>4.4 Tie-Breaker</h2>
+<p>If teams have equal points:</p>
+<ul>
+<li>Higher total kills wins the tie.</li>
+</ul>
+<h2>4.5 Free Fire Conduct</h2>
+<ul>
+<li>Players must bring their own fully charged mobile devices.</li>
+<li>Cheating and hacking result in immediate disqualification.</li>
+<li>Unauthorized third-party applications are prohibited.</li>
+<li>Intentional teaming with opponents is strictly prohibited.</li>
+</ul>
+
+</main>
+</body>
+</html>
